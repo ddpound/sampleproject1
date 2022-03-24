@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SampleJoin</title>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+
+    <div class="mainDiv">
+        <h1>SampleProject</h1>
+        <div class="loginForm">
+            <input id="id" type="text">
+            <input id="password" type="password">
+            <button onclick="join()">회원가입</button>
+            <button onclick="goLogin()" >로그인하러가기</button>
+        </div>
+
+    </div>
+
+    <style>
+        @import url("css/cssfile.css");
+    </style>
+
+
+    <script>
+        function join(){
+            var id = document.getElementById("id").value
+            var password = document.getElementById("password").value
+
+            let form = {
+                name : id,
+                password : password
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/save",
+                data: JSON.stringify(form),
+                contentType : "application/json; charset=utf-8", //body데이터가 어떤 타입인지 (MIME타입)
+                dataType: "json" // 요청을 서버로 해서 응답이 왔을때, String문자열임
+            }).done(function (reps){
+                console.log(reps)
+                if(reps.result){
+                    alert("회원가입 완료")
+                    window.location.href = "/"
+                }else{
+                    alert("이미있는아이디입니다")
+                }
+
+                })
+
+        }
+
+        function goLogin(){
+            window.location.href = "/"
+        }
+
+    </script>
+
+</body>
+
+
+</html>

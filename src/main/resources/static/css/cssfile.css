@@ -1,0 +1,19 @@
+body , html{
+    margin: 0;
+}
+
+h1{
+    text-align: center;
+}
+
+.mainDiv{
+    border: black solid 2px;
+    width: 400px;
+    height: 400px;
+    margin: 100px auto;
+}
+
+/* 로그인 폼이긴 하지만 사실상 모든 페이지의 mainDiv 의 자식 div임*/
+.loginForm{
+    white-space: pre;
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>loginsample</title>
+
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+</head>
+<body>
+
+
+    <div class="mainDiv">
+        <h1>SampleProject</h1>
+        <div class="loginForm">
+            <label th:if="${session.sessionLoginId != null}"  th:text = "${'현재 로그인 아이디 : ' + session.sessionLoginId}" ></label>
+            <button th:if="${session.sessionLoginId != null}"  onclick="logout()">로그아웃</button>
+            <input th:if="${session.sessionLoginId == null}" id="id" type="text">
+            <input th:if="${session.sessionLoginId == null}" id="password" type="password">
+            <button th:if="${session.sessionLoginId == null}" onclick="login()" >로그인</button>
+            <button th:if="${session.sessionLoginId == null}" onclick="goJoin()" >회원가입하러가기</button>
+        </div>
+    </div>
+
+
+    <style>
+        @import url("css/cssfile.css");
+    </style>
+
+<script>
+    function login(){
+        var id = document.getElementById("id").value
+        var password = document.getElementById("password").value
+
+
+
+        let form = {
+            name : id,
+            password : password
+        }
+        $.ajax({
+            type: "POST",
+            url: "/login",
+            data: JSON.stringify(form),
+            contentType : "application/json; charset=utf-8", //body데이터가 어떤 타입인지 (MIME타입)
+            dataType: "json" // 요청을 서버로 해서 응답이 왔을때, String문자열임
+        }).done(function (reps){
+            console.log(reps)
+            if(reps.result){
+                alert("로그인 완료")
+                window.location.href = "/"
+            }else{
+                alert("비밀번호나 아이디가 틀렸습니다")
+            }
+
+        })
+
+
+    }
+    function goJoin(){
+        window.location.href = "/joinPage"
+    }
+
+    function logout(){
+        window.location.href = "/logout"
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /db
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:~/sampleDB/test_db;AUTO_SERVER=TRUE
+    username: sa
+    password:
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+
+
+# MYSQL 에 관한 부분 ,
+# MySql을 원하신다면 testdb 라는 db스키마를 만들어주시고 패스워드와 유저를 맞춰주세요!
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/testdb?serverTimezone=Asia/Seoul
+#    username: testUser
+#    password: 1234
+#  jpa:
+#    open-in-view: true
+#    hibernate:
+#      ddl-auto: create
+#      naming:
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+#      use-new-id-generator-mappings: false
+#    show-sql: false
+#    properties:
+#      hibernate.format_sql: true
+
+# 기본 포트지만 바꾸시고 싶은 분들을 위해 남겨놓습니다
+server:
+  port: 8080
