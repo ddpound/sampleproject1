@@ -3,6 +3,8 @@ package com.example.sampleproject1.controller;
 import com.example.sampleproject1.model.SampleMember;
 import com.example.sampleproject1.service.SampleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,15 +29,17 @@ public class MainController {
 
     @PostMapping("save")
     @ResponseBody
-    public String saveUser(@RequestBody SampleMember sampleMember) {
+    public ResponseEntity saveUser(@RequestBody SampleMember sampleMember) {
 
         int resultInt = sampleUserService.joinUser(sampleMember);
         if (resultInt == 1) {
-            return "{\"result\" : true}";
+            return new  ResponseEntity(HttpStatus.OK);
         } else if (resultInt == -1) {
-            return "{\"result\" : false}";
+            // 리소스의 현재 상태와 충돌
+            return new  ResponseEntity(HttpStatus.CONFLICT);
         } else {
-            return "{\"result\" : false}";
+            // 그외 다양한 서버에러 발생시 500
+            return new  ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
@@ -60,6 +64,14 @@ public class MainController {
     public String logout( HttpSession httpSession){
         httpSession.removeAttribute("sessionLoginId");
         return "redirect:/";
+    }
+
+    @DeleteMapping(value = "delete-all")
+    @ResponseBody
+    public ResponseEntity deleteAllDB(){
+
+        sampleUserService.deleteAllUser();
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }

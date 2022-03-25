@@ -19,6 +19,7 @@
             <input th:if="${session.sessionLoginId == null}" id="password" type="password">
             <button th:if="${session.sessionLoginId == null}" onclick="login()" >로그인</button>
             <button th:if="${session.sessionLoginId == null}" onclick="goJoin()" >회원가입하러가기</button>
+            <button th:if="${session.sessionLoginId == null}" onclick="deleteAllUser()" >모든유저 삭제하기</button>
         </div>
     </div>
 
@@ -31,8 +32,6 @@
     function login(){
         var id = document.getElementById("id").value
         var password = document.getElementById("password").value
-
-
 
         let form = {
             name : id,
@@ -57,6 +56,25 @@
 
 
     }
+
+    function deleteAllUser(){
+        $.ajax({
+            type: "DELETE",
+            url: "/delete-all"
+        }).success(function (data){
+            console.log(data)
+            console.log(data.status)
+            if(data.status === 200){
+                alert("삭제완료")
+            }else{
+                alert("문제발생")
+            }
+        }).error(function (data){
+            console.log(data)
+            console.log(data.status)
+        })
+    }
+
     function goJoin(){
         window.location.href = "/joinPage"
     }

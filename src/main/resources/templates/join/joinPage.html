@@ -38,17 +38,18 @@
                 url: "/save",
                 data: JSON.stringify(form),
                 contentType : "application/json; charset=utf-8", //body데이터가 어떤 타입인지 (MIME타입)
-                dataType: "json" // 요청을 서버로 해서 응답이 왔을때, String문자열임
-            }).done(function (reps){
-                console.log(reps)
-                if(reps.result){
-                    alert("회원가입 완료")
-                    window.location.href = "/"
-                }else{
-                    alert("이미있는아이디입니다")
+            }).success(function (data){
+                console.log(data)
+                alert("성공")
+            }).error(function (data){
+                if (data.status === 409){
+                    console.log(data)
+                    alert("중복 아이디 로그인 시도")
+                }else {
+                    console.log(data)
+                    alert("서버 에러 발생")
                 }
-
-                })
+            })
 
         }
 
