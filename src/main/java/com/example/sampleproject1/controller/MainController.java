@@ -68,10 +68,17 @@ public class MainController {
 
     @DeleteMapping(value = "delete-all")
     @ResponseBody
-    public ResponseEntity deleteAllDB(){
+    public int deleteAllDB(){
 
-        sampleUserService.deleteAllUser();
-        return new ResponseEntity(HttpStatus.OK);
+        try{
+            sampleUserService.deleteAllUser();
+            return 200;
+        }catch (Exception e){
+            return 500;
+        }
+
+
+
     }
 
 }
